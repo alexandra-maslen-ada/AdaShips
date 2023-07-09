@@ -13,8 +13,10 @@ public class Board {
 
   };
   int boardSize = 5;
+  int numberOfHits = 0;
 
   public void reset() { // Easy reset to initial state ready for new game/restart
+    numberOfHits = 0;
     ships = null;
     ships = new Ship[1]; // Only one ship to be placed for now so easier to test
     ships[0] = new Ship();
@@ -79,6 +81,41 @@ public class Board {
       // Not out of board
       return true;
     }
+
+    public String fireTorpedo(Coords coords) { // Provide different round outcomes. Update game state by modifying
+    // cell values and tracking number of hits
+      String cellValue = cells[coords.y][coords.x];
+      if (cellValue.equals(" ")) {
+        cells[coords.y][coords.x] = "M";
+        return "Missed";
+      } else if (cellValue.equals("M")) {
+        return "Missed";
+      } else {
+        cells[coords.y][coords.x] = "H";
+        numberOfHits++;
+        return "Hit";
+      }
+    }
+
+    public boolean isValidCoordinateToFireTorpedo(Coords coord) { // Check if coordinates are within board boundaries
+      return coordsWithinBoard(coord);
+    }
+
+    public Boolean fleetSunk() { // Check status of fleet to determine winner
+      return (numberOfHits > 0) && (numberOfHits >= getTotalShipCells());
+    }
+
+  public int getTotalShipCells() { // Only consider placed ships and their sizes to validate number of hits require to win
+    int totalShipCells = 0;
+    if (ships != null) {
+      for (Ship ship : ships) {
+        if (ship.isPlaced()) {
+          totalShipCells += ship.getSize();
+        }
+      }
+    }
+    return totalShipCells;
+  }
   }
 
 

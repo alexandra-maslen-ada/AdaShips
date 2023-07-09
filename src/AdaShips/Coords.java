@@ -4,9 +4,15 @@ class Coords {
   public int x;
   public int y;
 
-  // Constructor overloading to create object Coords with different values (one for int, one for char)
+  // This is for coords made automatically
   public Coords(int x, int y) {
     this.x = x;
+    this.y = y;
+  }
+
+  // This is for coords made from a user input
+  public Coords(String x, int y) {
+    this.x = x.charAt(0) - 'A';
     this.y = y;
   }
 

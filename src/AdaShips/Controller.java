@@ -20,9 +20,11 @@ public class Controller {
                     break;
                 case ENTER_SETTINGS:  view.settingsScreen(model);
                     break;
-                case PLAYING:       System.out.println("GAME STARTED"); // User friendly message to inform game start
+                case PLAYING:        view.playingScreen(model);
+                break;
+                case FINISHED:      System.out.println("Game over");
                                     playing = false;
-                                    break;
+                    break;
                 case QUIT:          playing = false; // Break the look to simply exit the game
                     break;
             }

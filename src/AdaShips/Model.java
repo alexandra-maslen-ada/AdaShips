@@ -12,6 +12,7 @@ public class Model {
   public Player player1;
   public Player player2;
   public Player currentPlayer;
+  public Player winner;
 
   Model(){
     this.gameState = GameState.START; // Control point for managing game
@@ -21,6 +22,13 @@ public class Model {
   }
 
   public void updateGameState() { // Initialisation steps
+    if (player1.board.fleetSunk()) {
+      winner = player2;
+      gameState = GameState.FINISHED;
+    } else if(player2.board.fleetSunk()) {
+      winner = player1;
+      gameState = GameState.FINISHED;
+    }
     if (gameState.equals(GameState.ENTER_SETTINGS)) {
       setUpNewGame();
     }
@@ -31,6 +39,7 @@ public class Model {
     player2.board.reset();
     computerPlacesShips(); // Randomly place ships
     currentPlayer = player1;
+    winner = null;
   }
 
   public void computerPlacesShips() { // Automate process of placing ships and mark them as placed
@@ -58,12 +67,10 @@ public class Model {
     return shipCoords;
   }
 
-
-
   public Coords createRandomCoords() {
     Random random = new Random();
-    int row = random.nextInt(10); // Generate random row index (0-9)
-    int col = random.nextInt(10); // Generate random column index (0-9)
+    int row = random.nextInt(5); // Generate random row index (0-9)
+    int col = random.nextInt(5); // Generate random column index (0-9)
     Coords coords = new Coords(row, col);
     return coords;
   }
@@ -79,6 +86,16 @@ public class Model {
       endCoords.y += shipLength-1;
     }
     return endCoords;
+  }
+
+  public void switchPlayer() { // To ensure players take turns and switch roles effectively
+    currentPlayer = (currentPlayer == player1) ? player2 : player1;
+  }
+
+  public String computerShoots() { // To make decisions autonomously based on valid randomly generated coordinates
+    Coords coords = createRandomCoords();
+    String computerShot = player1.board.fireTorpedo(coords);
+    return computerShot;
   }
 }
 

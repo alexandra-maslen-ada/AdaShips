@@ -83,6 +83,7 @@ public class View {
           }
         }
       }
+
       printSingleBoard(model.player1);
       System.out.println("Are you happy with your board?. Press 'N' to reset ships. Press any other key to continue.");
       String confirmation = scanner.nextLine().toUpperCase();
@@ -94,7 +95,7 @@ public class View {
       model.gameState = Model.GameState.PLAYING;
     }
   }
-  // Is this the right place for this method below?
+
   public void printSingleBoard(Player player1) {
     // Print column letters
     System.out.print("  ");
@@ -108,7 +109,7 @@ public class View {
       StringBuilder row = new StringBuilder();
       // Print row number
       row.append(i).append(" ");
-
+      // Print board columns
       for (int j = 0; j < player1.board.cells[i].length; j++) {
         row.append(player1.board.cells[i][j] + "  ");
       }
@@ -116,20 +117,108 @@ public class View {
     }
   }
 
-  // Helper method to parse the input coordinates and create Coords object
+  // Change user coords (e.g. B3) to coord object (e.g. x=1,y=3)
   private Coords parseCoordinates(String coordString) {
     char letter = Character.toUpperCase(coordString.charAt(0));
-    int x = letter - 'A'; //* swap with x
-    int y = Integer.parseInt(coordString.substring(1)); //* swap with y
+    int x = letter - 'A'; // Convert char to int
+    int y = Integer.parseInt(coordString.substring(1));
     return new Coords(x, y);
   }
 
   public void printListOfShips(Ship[] ships) {
     System.out.println("Ships to place: ");
     for(Ship ship : ships) {
-      if(!ship.isPlaced()) {
+      if(!ship.isPlaced()) { // Only print the ships that are not placed so far by user
         System.out.println(" * " + ship.name + " " + ship.length);
       }
+    }
+  }
+
+  public void playingScreen(Model model) {
+    System.out.println("One player v computer game");
+
+    printPlayerBoards(model.player1, model.player2);
+
+    Scanner scanner = new Scanner(System.in);
+
+    if (model.currentPlayer.equals(model.player1)) {
+      String userInput;
+
+      System.out.println("Enter coordinates (e.g., A1, B2): for " + model.currentPlayer.name);
+      userInput = scanner.nextLine().toUpperCase();
+
+      if(userInput.equals("QUIT")) {
+        System.out.println("Quitting the game.... Goodbye!");
+        model.gameState = Model.GameState.QUIT;
+      }
+      else if (userInput.equals("")) {  // Auto create only valid coordinates when user chooses to
+        Boolean goodRandomCoords = false;
+        while (!goodRandomCoords) {
+          Coords coords = model.createRandomCoords();
+          if(model.player2.board.isValidCoordinateToPlaceShip(coords)) {
+            goodRandomCoords = true;
+            String torpedoResult = model.player2.board.fireTorpedo(coords);
+            printPlayerBoards(model.player1, model.player2);
+            System.out.println(torpedoResult);
+            scanner.nextLine().toUpperCase();
+            model.switchPlayer();
+          }
+        }
+      }
+      else { // Use coordinates given by user, update game state and switch players
+        String col = userInput.substring(0); // Get the first character entered
+        int row = Integer.parseInt(userInput.substring(1));  // Get the second character entered
+        Coords coords = new Coords(col, row);
+        if (model.player2.board.isValidCoordinateToFireTorpedo(coords)) {
+          String torpedoResult = model.player2.board.fireTorpedo(coords);
+          printPlayerBoards(model.player1, model.player2);
+          System.out.println(torpedoResult);
+          scanner.nextLine().toUpperCase();
+          model.switchPlayer();
+        }
+        else {
+          System.out.println("Invalid input! Please try again. Press any key to continue.");
+          scanner.nextLine().toUpperCase();
+        }
+      }
+    } else {
+      // Randomly select coordinates for computer player
+      System.out.println("One player v computer game");
+      String computerShot = model.computerShoots();
+      printPlayerBoards(model.player1, model.player2);
+      System.out.println("Computer fired a torpedo: " + computerShot + " .Press any key to continue.");
+
+      scanner.nextLine().toUpperCase();
+      model.switchPlayer();
+    }
+
+  }
+
+  public void printPlayerBoards(Player player1, Player player2) { // Construct a formatted representation of boards
+    // with the status of each cell in a visually aligned manner
+    System.out.println("\t");
+    System.out.println("      Your fleet             Enemy's fleet");
+    // System.out.print("  A B C D E F G H I J     A B C D E F G H I J\n");
+    System.out.println("  A B C D E       A B C D E\n");
+
+    for (int i = 0; i < player1.board.cells.length; i++) {
+      StringBuilder row = new StringBuilder();
+      // Print row number
+      row.append(i).append(" ");
+
+      for (int j = 0; j < player1.board.cells[i].length; j++) {
+        row.append(player1.board.cells[i][j] + " ");
+      }
+      row.append("\t" + (i)).append(" ");
+
+      for (int j = 0; j < player2.board.cells[i].length; j++) {
+        if (player2.board.cells[i][j].equals("M") || player2.board.cells[i][j].equals("H") || player2.board.cells[i][j].equals(" ") ) {
+          row.append(player2.board.cells[i][j] + " "); // Increased spacing for better visual representation
+        } else {
+          row.append(" ");
+        }
+      }
+      System.out.println(row);
     }
   }
 }
