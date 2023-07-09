@@ -214,7 +214,7 @@ public class View {
         if (player2.board.cells[i][j].equals("M") || player2.board.cells[i][j].equals("H") || player2.board.cells[i][j].equals(" ") ) {
           row.append(player2.board.cells[i][j] + " "); // Increased spacing for better visual representation
         } else {
-          row.append(" ");
+          row.append("  ");
         }
       }
       System.out.println(row);
