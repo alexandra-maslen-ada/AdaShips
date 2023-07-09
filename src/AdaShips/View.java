@@ -198,8 +198,7 @@ public class View {
     // with the status of each cell in a visually aligned manner
     System.out.println("\t");
     System.out.println("      Your fleet             Enemy's fleet");
-    // System.out.print("  A B C D E F G H I J     A B C D E F G H I J\n");
-    System.out.println("  A B C D E       A B C D E\n");
+    System.out.print("  A B C D E F G H I J     A B C D E F G H I J\n");
 
     for (int i = 0; i < player1.board.cells.length; i++) {
       StringBuilder row = new StringBuilder();

@@ -2,7 +2,7 @@ package AdaShips;
 
 public class Ship { // This provides functionality to get how long a ship is, whether it is placed and
   // change status on board accordingly
-  protected int length = 2;
+  protected int length;
   public String name = "Ship";
   private boolean placed = false;
   public String label = "S";

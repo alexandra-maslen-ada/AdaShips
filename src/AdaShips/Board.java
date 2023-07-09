@@ -1,25 +1,32 @@
 package AdaShips;
 
 public class Board {
-  // Initialise the default board of 10 x 10 as an empty multi-dimensional array - a smaller version here to start
-  // to test more easily
+  // Initialise the default board of 10 x 10 as an empty multi-dimensional array
   Ship ships[];
   String cells[][] = { // A space character represents an empty cell for UI clarity
-    {" ", " ", " ", " ", " "},
-    {" ", " ", " ", " ", " "},
-    {" ", " ", " ", " ", " "},
-    {" ", " ", " ", " ", " "},
-    {" ", " ", " ", " ", " "}
-
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+    {" ", " ", " ", " ", " ", " ", " ", " ", " ", " "}
   };
-  int boardSize = 5;
+  int boardSize = 10;
   int numberOfHits = 0;
 
   public void reset() { // Easy reset to initial state ready for new game/restart
     numberOfHits = 0;
     ships = null;
-    ships = new Ship[1]; // Only one ship to be placed for now so easier to test
-    ships[0] = new Ship();
+    ships = new Ship[5]; // 5 ships are now available to be placed
+    ships[0] = new Carrier();
+    ships[1] = new Battleship();
+    ships[2] = new Destroyer();
+    ships[3] = new Submarine();
+    ships[4] = new PatrolBoat();
 
     clearAllCoordinates();
     for(Ship ship : ships) {
@@ -59,6 +66,9 @@ public class Board {
       for (int j = 0; j < cells[i].length; j++) {
         cells[i][j] = " "; // Reset cell value to empty if user unhappy with settings
       }
+    }
+    for(Ship ship : ships) {
+      ship.unplace();
     }
   }
 
