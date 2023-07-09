@@ -14,10 +14,16 @@ public class Controller {
     public void run (){
         Boolean playing = true;
         while (playing) {
+            model.updateGameState();
             switch( model.gameState ) { // Different actions can be taken depending on game state
                 case START:         view.startScreen(model);
                     break;
-                case QUIT:          playing = false;
+                case ENTER_SETTINGS:  view.settingsScreen(model);
+                    break;
+                case PLAYING:       System.out.println("GAME STARTED"); // User friendly message to inform game start
+                                    playing = false;
+                                    break;
+                case QUIT:          playing = false; // Break the look to simply exit the game
                     break;
             }
         }
