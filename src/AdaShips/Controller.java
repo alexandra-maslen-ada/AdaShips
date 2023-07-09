@@ -22,10 +22,9 @@ public class Controller {
                     break;
                 case PLAYING:        view.playingScreen(model);
                 break;
-                case FINISHED:      System.out.println("Game over");
-                                    playing = false;
+                case FINISHED:       view.gameOverScreen(model);
                     break;
-                case QUIT:          playing = false; // Break the look to simply exit the game
+                case QUIT:           playing = false; // Break the look to simply exit the game
                     break;
             }
         }
