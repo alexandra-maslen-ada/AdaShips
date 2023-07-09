@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class ScreenGameOver extends Screen {
     public static void render(Model model) { // Handle end of game and allow user to replay or not
+        printSmallHeader();
         System.out.println("Game over");
 
         System.out.println(model.winner.name + " wins!");

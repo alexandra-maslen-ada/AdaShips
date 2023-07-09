@@ -12,6 +12,7 @@ public class ScreenEnterSettings extends Screen {
                 boolean goodCoords = false;
 
                 while (!goodCoords) { // Unless the ship's coords are valid, user will be prompted again
+                    printSmallHeader();
                     printSingleBoard(model.player1);
 
                     printListOfShips(model.player1.board.ships);
@@ -47,7 +48,8 @@ public class ScreenEnterSettings extends Screen {
                     // 2 separate ones so easier to reuse
 
                     if (model.player1.board.validCoordsForNewShip(shipCoords, ship.length)) {
-                        System.out.println("Are you happy with the coordinates of " + ship.name + "?. Type 'N' or press return to accept.");
+                        System.out.println("Press any key to continue.");
+                        System.out.print("OR type 'N' to replace the " + ship.name + " > ");
                         String confirmation = scanner.nextLine().toUpperCase();
 
                         if (confirmation.equalsIgnoreCase("N") || confirmation.equalsIgnoreCase("NO")) {
@@ -62,9 +64,10 @@ public class ScreenEnterSettings extends Screen {
                     }
                 }
             }
-
+            printSmallHeader();
             printSingleBoard(model.player1);
-            System.out.println("Are you happy with your board?. Press 'N' to reset ships. Press any other key to continue.");
+            System.out.println("Are you happy with your board?.");
+            System.out.print("Press any other key to continue, or 'N' to reset ships > ");
             String confirmation = scanner.nextLine().toUpperCase();
             if(confirmation.equalsIgnoreCase("N") || confirmation.equalsIgnoreCase("NO")) {
                 model.player1.board.clearAllCoordinates(); // To allow user to clear their board and start again

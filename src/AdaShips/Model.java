@@ -69,8 +69,8 @@ public class Model {
 
   public Coords createRandomCoords() {
     Random random = new Random();
-    int row = random.nextInt(5); // Generate random row index (0-9)
-    int col = random.nextInt(5); // Generate random column index (0-9)
+    int row = random.nextInt(10); // Generate random row index (0-9)
+    int col = random.nextInt(10); // Generate random column index (0-9)
     Coords coords = new Coords(row, col);
     return coords;
   }
@@ -92,10 +92,10 @@ public class Model {
     currentPlayer = (currentPlayer == player1) ? player2 : player1;
   }
 
-  public String computerShoots() { // To make decisions autonomously based on valid randomly generated coordinates
+  public String[] computerShoots() { // To make decisions autonomously based on valid randomly generated coordinates
     Coords coords = createRandomCoords();
     String computerShot = player1.board.fireTorpedo(coords);
-    return computerShot;
+    return new String[]{computerShot,coords.toString()};
   }
 }
 

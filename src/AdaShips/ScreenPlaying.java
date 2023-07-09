@@ -5,7 +5,7 @@ import java.util.Scanner; // To allow user input
 public class ScreenPlaying extends Screen {
 
   public static void render(Model model) {
-    System.out.println("One player v computer game");
+    printSmallHeader();
 
     printPlayerBoards(model.player1, model.player2);
 
@@ -14,7 +14,8 @@ public class ScreenPlaying extends Screen {
     if (model.currentPlayer.equals(model.player1)) {
       String userInput;
 
-      System.out.println("Enter coordinates (e.g., A1, B2): for " + model.currentPlayer.name);
+      System.out.println("Next go.");
+      System.out.print("Enter coordinates (e.g., A1, B2) > ");
       userInput = scanner.nextLine().toUpperCase();
 
       if(userInput.equals("QUIT")) {
@@ -27,10 +28,7 @@ public class ScreenPlaying extends Screen {
           Coords coords = model.createRandomCoords();
           if(model.player2.board.isValidCoordinateToPlaceShip(coords)) {
             goodRandomCoords = true;
-            String torpedoResult = model.player2.board.fireTorpedo(coords);
-            printPlayerBoards(model.player1, model.player2);
-            System.out.println(torpedoResult);
-            scanner.nextLine().toUpperCase();
+            printUserFiredResult(model, coords, scanner);
             model.switchPlayer();
           }
         }
@@ -40,28 +38,35 @@ public class ScreenPlaying extends Screen {
         int row = Integer.parseInt(userInput.substring(1));  // Get the second character entered
         Coords coords = new Coords(col, row);
         if (model.player2.board.isValidCoordinateToFireTorpedo(coords)) {
-          String torpedoResult = model.player2.board.fireTorpedo(coords);
-          printPlayerBoards(model.player1, model.player2);
-          System.out.println(torpedoResult);
-          scanner.nextLine().toUpperCase();
+          printUserFiredResult(model, coords, scanner);
           model.switchPlayer();
         }
         else {
-          System.out.println("Invalid input! Please try again. Press any key to continue.");
+          System.out.println("Invalid input! Press any key to try again.");
           scanner.nextLine().toUpperCase();
         }
       }
     } else {
       // Randomly select coordinates for computer player
-      System.out.println("One player v computer game");
-      String computerShot = model.computerShoots();
+      String[] computerShot = model.computerShoots();
+      printSmallHeader();
       printPlayerBoards(model.player1, model.player2);
-      System.out.println("Computer fired a torpedo: " + computerShot + " .Press any key to continue.");
+      System.out.println("Computer fired at " + computerShot[1] + ": " + computerShot[0]);
+      System.out.println("Press any key to continue.");
 
       scanner.nextLine().toUpperCase();
       model.switchPlayer();
     }
 
+  }
+
+  public static void printUserFiredResult(Model model, Coords coords, Scanner scanner) {
+    String torpedoResult = model.player2.board.fireTorpedo(coords);
+    printSmallHeader();
+    printPlayerBoards(model.player1, model.player2);
+    System.out.println("You fired at " + coords.toString() + ": " + torpedoResult);
+    System.out.println("Press any key to continue.");
+    scanner.nextLine().toUpperCase();
   }
 
 }

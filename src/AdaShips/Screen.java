@@ -20,6 +20,7 @@ public abstract class Screen {
             }
             System.out.println(row);
         }
+        System.out.print("\n");
     }
 
     // Change user coords (e.g. B3) to coord object (e.g. x=1,y=3)
@@ -37,11 +38,11 @@ public abstract class Screen {
                 System.out.println(" * " + ship.name + " " + ship.length);
             }
         }
+        System.out.print("\n");
     }
 
     public static void printPlayerBoards(Player player1, Player player2) { // Construct a formatted representation of boards
         // with the status of each cell in a visually aligned manner
-        System.out.println("\t");
         System.out.println("      Your fleet             Enemy's fleet");
         System.out.print("  A B C D E F G H I J     A B C D E F G H I J\n");
 
@@ -63,6 +64,54 @@ public abstract class Screen {
                 }
             }
             System.out.println(row);
+        }
+        System.out.println("\n");
+    }
+
+    public static void printBigHeader() {
+        clearScreen();
+        System.out.println(
+            "************************************************************\n" +
+            "\n" +
+            "  *     ****      *     ****   *   *   *****   ****     ****\n" +
+            " * *    *   *    * *   *       *   *     *     *   *   *    \n" +
+            "*****   *   *   *****   ***    *****     *     ****     *** \n" +
+            "*   *   *   *   *   *      *   *   *     *     *           *\n" +
+            "*   *   ****    *   *  ****    *   *   *****   *       **** \n" +
+            "\n" +
+            "************************************************************\n" +
+            "\n" +
+            "                    By Alexandra Maslen                     \n" +
+            "\n" +
+            "************************************************************" +
+            "\n"
+        );
+    }
+
+    public static void printSmallHeader() {
+        clearScreen();
+        System.out.println(
+            "************************************************************\n" +
+            "*                         ADASHIPS                         *\n" +
+            "************************************************************" +
+            "\n"
+        );
+    }
+
+    public static void clearScreen() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                // For Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // For Linux, macOS, and others
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch (Exception e) {
+            // Handle any exceptions that may occur
+            e.printStackTrace();
         }
     }
 }
