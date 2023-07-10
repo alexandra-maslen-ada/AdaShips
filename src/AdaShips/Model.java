@@ -1,5 +1,6 @@
 package AdaShips;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Model {
@@ -91,12 +92,7 @@ public class Model {
   public void switchPlayer() { // To ensure players take turns and switch roles effectively
     currentPlayer = (currentPlayer == player1) ? player2 : player1;
   }
-
-  public String[] computerShoots() { // To make decisions autonomously based on valid randomly generated coordinates
-    Coords coords = createRandomCoords();
-    String computerShot = player1.board.fireTorpedo(coords);
-    return new String[]{computerShot,coords.toString()};
-  }
+  
 }
 
 

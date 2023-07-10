@@ -1,5 +1,7 @@
 package AdaShips;
 
+import java.util.ArrayList;
+
 public class Board {
   // Initialise the default board of 10 x 10 as an empty multi-dimensional array
   Ship ships[];
@@ -115,17 +117,29 @@ public class Board {
       return (numberOfHits > 0) && (numberOfHits >= getTotalShipCells());
     }
 
-  public int getTotalShipCells() { // Only consider placed ships and their sizes to validate number of hits require to win
-    int totalShipCells = 0;
-    if (ships != null) {
-      for (Ship ship : ships) {
-        if (ship.isPlaced()) {
-          totalShipCells += ship.getSize();
+    public int getTotalShipCells() { // Only consider placed ships and their sizes to validate number of hits require to win
+      int totalShipCells = 0;
+      if (ships != null) {
+        for (Ship ship : ships) {
+          if (ship.isPlaced()) {
+            totalShipCells += ship.getSize();
+          }
         }
       }
+      return totalShipCells;
     }
-    return totalShipCells;
-  }
+
+    public ArrayList<Coords> toListOfAvailableCoords() {
+      ArrayList<Coords> coords = new ArrayList<Coords>();
+      for (int i = 0; i < cells.length; i++) {
+        for (int j = 0; j < cells[i].length; j++) {
+          if (cells[i][j] == " ") {
+            coords.add(new Coords(i, j));
+          }
+        }
+      }
+      return coords;
+    }
   }
 
 

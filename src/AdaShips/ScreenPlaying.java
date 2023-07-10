@@ -48,7 +48,7 @@ public class ScreenPlaying extends Screen {
       }
     } else {
       // Randomly select coordinates for computer player
-      String[] computerShot = model.computerShoots();
+      String[] computerShot = model.player2.autoFireAt(model.player1);
       printSmallHeader();
       printPlayerBoards(model.player1, model.player2);
       System.out.println("Computer fired at " + computerShot[1] + ": " + computerShot[0]);
