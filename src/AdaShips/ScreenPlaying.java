@@ -4,7 +4,7 @@ import java.util.Scanner; // To allow user input
 
 public class ScreenPlaying extends Screen {
 
-  public static void render(Model model) {
+  public static void render(Game model) {
     printSmallHeader();
 
     printPlayerBoards(model.player1, model.player2);
@@ -20,7 +20,7 @@ public class ScreenPlaying extends Screen {
 
       if(userInput.equals("QUIT")) {
         System.out.println("Quitting the game.... Goodbye!");
-        model.gameState = Model.GameState.QUIT;
+        model.gameState = Game.GameState.QUIT;
       }
       else if (userInput.equals("")) {  // Auto create only valid coordinates when user chooses to
         Boolean goodRandomCoords = false;
@@ -60,7 +60,7 @@ public class ScreenPlaying extends Screen {
 
   }
 
-  public static void printUserFiredResult(Model model, Coords coords, Scanner scanner) {
+  public static void printUserFiredResult(Game model, Coords coords, Scanner scanner) {
     String torpedoResult = model.player2.board.fireTorpedo(coords);
     printSmallHeader();
     printPlayerBoards(model.player1, model.player2);

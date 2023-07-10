@@ -3,7 +3,7 @@ package AdaShips;
 import java.util.Scanner;
 
 public class ScreenEnterSettings extends Screen {
-    public static void render(Model model) { // Set up game such as ships' placement interactively with user or auto generate it
+    public static void render(Game model) { // Set up game such as ships' placement interactively with user or auto generate it
         boolean happyWithBoard = false;
         while (!happyWithBoard) { // Unless the user is happy with board, will be asked for their input
             Scanner scanner = new Scanner(System.in);
@@ -74,7 +74,7 @@ public class ScreenEnterSettings extends Screen {
             } else {
                 happyWithBoard = true; // The user can finally start playing
             }
-            model.gameState = Model.GameState.PLAYING;
+            model.gameState = Game.GameState.PLAYING;
         }
     }
 }

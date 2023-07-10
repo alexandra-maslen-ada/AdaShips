@@ -3,7 +3,7 @@ package AdaShips;
 public class Main {
 
   public static void main(String[] args) {
-    Model model = new Model();
+    Game model = new Game();
     Controller controller = new Controller(model);
   }
 }

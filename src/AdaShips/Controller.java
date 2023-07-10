@@ -2,9 +2,9 @@ package AdaShips;
 
 public class Controller {
     // Handle the game logic and interaction between model and view
-    private Model model;
+    private Game model;
 
-    public Controller(Model model) {
+    public Controller(Game model) {
         this.model = model;
         run(); // Control main game loop based on the state chosen by user
     }

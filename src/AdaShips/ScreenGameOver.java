@@ -3,7 +3,7 @@ package AdaShips;
 import java.util.Scanner;
 
 public class ScreenGameOver extends Screen {
-    public static void render(Model model) { // Handle end of game and allow user to replay or not
+    public static void render(Game model) { // Handle end of game and allow user to replay or not
         printSmallHeader();
         System.out.println("Game over");
 
@@ -16,10 +16,10 @@ public class ScreenGameOver extends Screen {
         userInput = scanner.nextLine();
 
         if (userInput.equals("1")) {
-            model.gameState = Model.GameState.ENTER_SETTINGS;
+            model.gameState = Game.GameState.ENTER_SETTINGS;
             model.setUpNewGame();
         } else if (userInput.equals("quit")) {
-            model.gameState = Model.GameState.QUIT;
+            model.gameState = Game.GameState.QUIT;
         } else {
             System.out.println("Invalid input! Please try again.");
         }

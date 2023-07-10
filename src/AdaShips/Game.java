@@ -1,9 +1,8 @@
 package AdaShips;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-public class Model {
+public class Game {
   enum GameState {
     // To organise and manage the flow of the game and different stages
     START, ENTER_SETTINGS, PLAYING, FINISHED, QUIT
@@ -15,7 +14,7 @@ public class Model {
   public Player currentPlayer;
   public Player winner;
 
-  Model(){
+  Game(){
     this.gameState = GameState.START; // Control point for managing game
     player1 = new Player(new Board(), "Alex");
     player2 = new Player(new Board(), "Computer");
@@ -92,7 +91,7 @@ public class Model {
   public void switchPlayer() { // To ensure players take turns and switch roles effectively
     currentPlayer = (currentPlayer == player1) ? player2 : player1;
   }
-  
+
 }
 
 
