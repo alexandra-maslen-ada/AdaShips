@@ -1,6 +1,6 @@
 package AdaShips;
 
-public class Ship { // This provides functionality to get how long a ship is, whether it is placed and
+public abstract class Ship { // This provides functionality to get how long a ship is, whether it is placed and
   // change status on board accordingly
   protected int length;
   public String name = "Ship";
