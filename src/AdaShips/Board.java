@@ -102,9 +102,11 @@ public class Board {
         return "Missed";
       } else if (cellValue.equals("M")) {
         return "Missed";
-      } else {
+      } else if (!cellValue.equals("H")) {
         cells[coords.y][coords.x] = "H";
         numberOfHits++;
+        return "Hit";
+      } else {
         return "Hit";
       }
     }
@@ -129,13 +131,11 @@ public class Board {
       return totalShipCells;
     }
 
-    public ArrayList<Coords> toListOfAvailableCoords() {
-      ArrayList<Coords> coords = new ArrayList<Coords>();
+    public ArrayList<String> toListOfAvailableCoords() {
+      ArrayList<String> coords = new ArrayList<String>();
       for (int i = 0; i < cells.length; i++) {
         for (int j = 0; j < cells[i].length; j++) {
-          if (cells[i][j] == " ") {
-            coords.add(new Coords(i, j));
-          }
+          coords.add(new Coords(i, j).toString());
         }
       }
       return coords;

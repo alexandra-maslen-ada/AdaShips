@@ -52,12 +52,18 @@ public abstract class Screen {
             row.append(i).append(" ");
 
             for (int j = 0; j < player1.board.cells[i].length; j++) {
-                row.append(player1.board.cells[i][j] + " ");
+                if (player1.board.cells[i][j].equals("M")) {
+                    row.append(". ");
+                } else {
+                    row.append(player1.board.cells[i][j] + " ");
+                }
             }
             row.append("\t" + (i)).append(" ");
 
             for (int j = 0; j < player2.board.cells[i].length; j++) {
-                if (player2.board.cells[i][j].equals("M") || player2.board.cells[i][j].equals("H") || player2.board.cells[i][j].equals(" ") ) {
+                if (player2.board.cells[i][j].equals("M")) {
+                    row.append(". ");
+                } else if (player2.board.cells[i][j].equals("H") || player2.board.cells[i][j].equals(" ") ) {
                     row.append(player2.board.cells[i][j] + " "); // Increased spacing for better visual representation
                 } else {
                     row.append("  ");
