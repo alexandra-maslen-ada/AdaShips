@@ -7,16 +7,16 @@ The game involves skillful placement of ships, tactical decision-making, and ded
 
 ### a. Summary and review of the problem, overall proposed solution.
 
-#####Problems' Definition
+#### Problems' Definition
 This involved several challenges as follows:
-•	Designing the game logic,
-•	Managing game state transitions,
-•	Implementing the user interface,
-•	Handling user input,
-•	Ensuring efficient data structures for board representation and ship placement validation,
-•	Designing and engaging user experience using the command line,
-•	Handling the game flow,
-•	Implementing game mechanics accurately.
+* Designing the game logic,
+* Managing game state transitions,
+* Implementing the user interface,
+* Handling user input,
+* Ensuring efficient data structures for board representation and ship placement validation,
+* Designing and engaging user experience using the command line,
+* Handling the game flow,
+* Implementing game mechanics accurately.
 
 When developing battleships, I focused on these three questions:
 1)	How could I structure the game efficiently?
@@ -29,7 +29,7 @@ One programming principle to apply here would be the “Single Responsibility Pr
 3)	How could I make the user interface intuitive?
 It is crucial to create a clear and consistent layout, provide visual feedback and instructions, but also to ensure responsiveness when handling errors or user inputs. To do so, the principle of “user-centered design” should be emphasized. By thinking of what the user wants and needs, or what could be their pain-points, this should result in a more user-friendly experience. Nevertheless, as this would increase development time, this needs to be the right balance. 
 
-#####Overall proposed solution
+#### Overall proposed solution
 In the proposed Battleship solution, I would develop in Java a Model-View-Controller (MVC) architecture, ensuring separation of concerns and modularity. As time is restricted and would include mainly manual testing rather than automated one, MVC would be more straightforward. 
 This game would feature intuitive user interfaces, to enhance usability and user experience.
 The game logic would be implemented using object-oriented programming principles, allowing for scalability and maintainability.  
@@ -345,22 +345,55 @@ This was better for the following reasons:
 * Single responsibility principle is upheld: printing out each screen is owned by separate classes.
  
 #### 'Code Smells' example
-This refers to certain patterns in code that could indicate potential design issues. For example, when I designed the printPlayerBoards() (see below), you can see clearly that there are 3 'for' nested loops making these conditionals complex. 
+This refers to certain patterns in code that could indicate potential design issues. For example, when I designed the ScreenEnterSettings class (see below), you can see clearly that there are 3 'for' nested loops making these conditionals complex. 
 
-Screenshot Code Smells
+```
+public class ScreenEnterSettings extends Screen {
+    public static void render(Game model) { // Set up game such as ships' placement interactively with user or auto generate it
+        boolean happyWithBoard = false;
+        while (!happyWithBoard) { // Unless the user is happy with board, will be asked for their input
+            Scanner scanner = new Scanner(System.in);
 
-Even though it does not lead to a bug or an error, it affects the readability and maintainability. I could have used a single 'for' loop iterating over the rows of the boards and manipulate the row string accordingly. However, I do not think this option would have made a huge improvement. Another better option would have been to encapsulate the logic for formatting and printing a single row of the player boards in a separate method. This way, I could have reused the method for both player1 and player2 without duplicating the code and the use of nested loops. 
+            for (Ship ship : model.player1.board.ships) { // Player can configure each ship individually
+                boolean goodCoords = false;
+
+                while (!goodCoords) {
+```
+
+Even though it does not lead to a bug or an error, it affects the readability and maintainability. Given more time I could have gone back and tried to refactor this to make it simpler. I could have tried adding state into the Screen class (for example so it remembers the choices the user has made) and use the looping structure in the controller.
 
 #### 'Reuse' example
 This refers to the practice of using existing code to build new functionality. The class "Coords" as shown below provides two constructors, one for creating coordinates automatically and another for creating coordinates from user input. By providing multiple ways to create objects, this class allows for flexibility as it can reuse the 'Coords' functionality in different scenarios. Additionally, the 'toString()' method is overridden to provide a readable format for displaying coordinates. This allows for consistent and reusable code when converting "Coords" objects to a string representation.  
 
-Screenshot Reuse
+```
+class Coords {
+  public int x;
+  public int y;
+
+  // This is for coords made automatically
+  public Coords(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  // This is for coords made from a user input
+  public Coords(String x, int y) {
+    this.x = x.charAt(0) - 'A';
+    this.y = y;
+  }
+
+  public String toString() { // Display coordinates in a readable format
+    String[] cols = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+    return cols[x] + y;
+  }
+}
+```
 
 A criticism of the above could be the lack of input validation in the constructors. As the constructor takes a String for the x-coordinate, it assumes that the input is a single character. It would be beneficial to include proper input validation to ensure the correctness of the input values. This could avoid unexpected behavior or errors when added functionality is added. 
 
 ### b. Implementation and effective use of ‘advanced’ programming principles(with examples).
 
-####Polymorphism: Ship sub classes being looped through
+#### Polymorphism: Ship sub classes being looped through
 
 My game uses a set of classes for each type of ship: a Destroyer class, a Submarine class, etc.  All of these classes extend the base class Ship.
 
@@ -390,7 +423,7 @@ public static void printListOfShips(Ship[] ships) {
 }
 ```
 
-####Extending: Ship sub classes
+#### Extending: Screen sub classes
 
 My game uses a set of classes for each type of Screen: a ScreenStart class, a ScreenGamerOver class, etc.  All of these classes extend the base class Screen.
 
@@ -410,7 +443,7 @@ public class ScreenGameOver extends Screen {
 }
 ```
 
-####Abstraction: Ship class
+#### Abstraction: Ship class
 My game uses a set of classes for each type of ship: a Destroyer class, a Submarine class, etc.  All of these classes extend the base class Ship.
 
 The class Ship is there to help define the sub classes, it's not to be used itself.  It helps to define all the common attributes with default values for each sub class and to define the methods that will be called on all the ships .  Because of this is defined as being abstract:
@@ -621,8 +654,8 @@ From the beginning, I realized that despite my best intentions to include automa
 ##### Continuous Professional Development
 I would like to do the following:
 
-•	Improving this game prototype further taking into considerations the weaknesses I mentioned above, 
+* Improving this game prototype further taking into considerations the weaknesses I mentioned above, 
 
-•	Continuing to learn Java at an intermediate course, but this time completing a coding challenge ideally a week, 
+* Continuing to learn Java at an intermediate course, but this time completing a coding challenge ideally a week, 
 
-•	Improving the other Java project created for my previous team where the user could search for missing field in the database more user-friendly. This time, I would research and apply new architectural design patterns. 
+* Improving the other Java project created for my previous team where the user could search for missing field in the database more user-friendly. This time, I would research and apply new architectural design patterns. 
