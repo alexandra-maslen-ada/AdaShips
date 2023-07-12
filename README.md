@@ -518,13 +518,22 @@ All of this allows code reusability and flexibility, as the 'Ship' class can be 
 
 However, the responsibility of generating ship coordinates within the 'Ship' class should ideally focus on defining the properties and behavior of a ship, rather than handling the generation of coordinates. A more modular approach would be to add this logic into the Coords class to separate concerns further. 
 
-#### Method that calculates all cell coords (little bit of maths)
+### Method that converts user input into an int (thanks to chatGPT)
 
-TO DO
+The game has to take coordinate values from the user in this format: A0
 
-#### Method that converts user input into an int (thanks to chatGPT)
+But has to plot it to a 2D array which has integer values: 0, 0.
 
-TO DO
+I therefore had to work out how to change an "A" to a number. This is the solution I found:
+
+```
+String x = "A";
+x.charAt(0) - 'A'; // outputs 0
+```
+
+This uses casting to convert the String to a Char, then the Char to an int.
+
+While this was a quick way to do it, it's not very readable.  Although the code is clever, I could have created a simpler array look up like I did later in the toString method. Unfortunately I ran out of time to refactor this.
 
 ### d. Improved algorithms
 
@@ -579,6 +588,30 @@ public String[] autoFireAt(Player enemy) {
  
 ### e. Reflective review, opportunities to improve and continued professional development.
 
-Throughout the process of designing AdaShips game, I learned 
+Throughout the project, I focused on these three questions:
+1)	How could I structure the game efficiently? 
+2)	How could I implement its logic correctly?
+3)	How could I make the user interface intuitive?
 
-difficult as a junior with no experience on my own - team / collaborative work - got help/code reviews and structure
+#### Reflection Review
+I learnt the importance of modular design patterns such as the MVC architecture (with a clear separation of components). This helped me to structure and organize my project efficiently. 
+
+The use of a state machine design approach (as my game changed its behavior depending on the game state/screen) supported the implementation of a clear logic. 
+
+I tried to follow the single responsibility principle (SRP) to keep each function simple, but it became difficult to follow as the game became more complex. I realised the importance of object-orientated principles not only of modularity but also reusability, encapsulation, and inheritance which I tried to incorporate in my codebase. 
+
+##### Opportunities
+As I worked iteratively, I realized that although I tried to develop an intuitive interface, there was still a lot more I could do to deal with error handling and user input validation. 
+
+Even though I tried to adhere to coding standards as much as I could, it was a steep learning curve. There is much more I could do to avoid ‘code smells’ such as duplicates (nested loops). 
+
+From the beginning, I realized that despite my best intentions to include automatic testing, I would run out of time. I still believe a test-driven approach would have helped me to fix some of the bugs I found early. 
+
+##### Continuous Professional Development
+I would like to do the following:
+
+•	Improving this game prototype further taking into considerations the weaknesses I mentioned above, 
+
+•	Continuing to learn Java at an intermediate course, but this time completing a coding challenge ideally a week, 
+
+•	Improving the other Java project created for my previous team where the user could search for missing field in the database more user-friendly. This time, I would research and apply new architectural design patterns. 

@@ -26,7 +26,7 @@ public class ScreenPlaying extends Screen {
         Boolean goodRandomCoords = false;
         while (!goodRandomCoords) {
           Coords coords = model.createRandomCoords();
-          if(model.player2.board.isValidCoordinateToPlaceShip(coords)) {
+          if(model.player2.board.isValidCoordinateToFireTorpedo(coords)) {
             goodRandomCoords = true;
             printUserFiredResult(model, coords, scanner);
             model.switchPlayer();

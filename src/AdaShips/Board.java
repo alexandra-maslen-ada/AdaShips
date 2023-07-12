@@ -102,9 +102,11 @@ public class Board {
         return "Missed";
       } else if (cellValue.equals("M")) {
         return "Missed";
-      } else {
+      } else if (!cellValue.equals("H")) {
         cells[coords.y][coords.x] = "H";
         numberOfHits++;
+        return "Hit";
+      } else {
         return "Hit";
       }
     }
