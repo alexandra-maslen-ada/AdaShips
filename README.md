@@ -612,22 +612,16 @@ A programmer in my team helped me with this. He said that instead of just rememb
 He also explained to me that for this to work I'd need to convert the 2D array of the board into a flat array to enable the random int generator to work.  I received a lot of help with this, below is an extract of how it worked...
 
 ```
-public String[] autoFireAt(Player enemy) { 
-    // get a flat array of all the available coordinates on the player board
-    ArrayList<Coords> availableCoordsList = enemy.board.toListOfAvailableCoords();
-    // get an array of all the previous places the computer fired at
+  public String[] autoFireAt(Player enemy) { // To make decisions autonomously based on valid randomly generated coordinates
+    ArrayList<String> availableCoordsList = enemy.board.toListOfAvailableCoords();
     availableCoordsList.removeAll(this.shotHistory);
-    // create a "delta", an array of coordinates we can shoot at
-    Coords[] availableCoords = availableCoordsList.toArray(new Coords[availableCoordsList.size()]);
-    // randomly choose one of those coords to fire at
+    String[] availableCoords = availableCoordsList.toArray(new String[availableCoordsList.size()]);
     Random random = new Random();
-    Coords coords = availableCoords[random.nextInt(availableCoords.length)];
-    // fire it
+    Coords coords = Screen.parseCoordinates(availableCoords[random.nextInt(availableCoords.length)]);
     String shotResult = enemy.board.fireTorpedo(coords);
-    record where we fired
-    addToShotHistory(coords);
+    addToShotHistory(coords.toString());
     return new String[]{shotResult,coords.toString()};
-}
+  }
 ```
  
 ### e. Reflective review, opportunities to improve and continued professional development.
