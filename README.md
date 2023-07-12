@@ -38,8 +38,19 @@ As mentioned, the solution would also include manual testing to ensure functiona
 Even though UI would be basic, the solution would aim to provide a full and enjoyable Battleship game experience against the computer. 
 
 ### b. UML style diagram illustrating initial overall solution 
-Summarise main points
-Pain points
+
+The overall structure of my program uses a game state management pattern like so...
+
+![overall structure](https://github.com/alexandra-maslen-ada/AdaShips/assets/138867091/554bc9b4-2153-4caf-8c64-90ee717b99b7)
+
+* At the beginning the Game class is instantiated. This holds all the logic and data to control the game.
+* On every loop, the game updates itself based on the inputs given to it either by the user or the computer player.
+* Depending on the gameState value, it will show either the start screen, the setting screen, the playing screen or the game over screen.
+* If the user has opted to quit then the loop ends and the program finishes.
+
+The Game class has been modeled like this:
+
+![game model structure](https://github.com/alexandra-maslen-ada/AdaShips/assets/138867091/083bf946-d17a-4ce1-b3c4-a3b80185829c)
 
 ### c. Initial working plan, overall approach, development, strategy and approach to quality 
 
